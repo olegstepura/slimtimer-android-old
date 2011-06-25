@@ -17,7 +17,58 @@
 package com.jaanussiim.slimtimer.android.activities;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import com.jaanussiim.slimtimer.android.database.Database;
+
+import static com.jaanussiim.slimtimer.android.Constants.PREFERENCES_NAME;
+import static com.jaanussiim.slimtimer.android.Constants.PREFERENCES_EMAIL_KEY;
+import static com.jaanussiim.slimtimer.android.Constants.PREFERENCES_PASSWORD_KEY;
 
 public class SlimtimerActivity extends Activity {
+  private static Database databaseInstance;
+  private Database database;
 
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+
+    if (database == null) {
+      database = getSharedDatabase(this);
+    }
+
+    database.open();
+    moveUsernamePassword(database);
+  }
+
+  //TODO jaanus: check this. I don't like static
+  public static Database getSharedDatabase(Context ctx) {
+    if (databaseInstance == null) {
+      databaseInstance = new Database(ctx);
+    }
+
+    return databaseInstance;
+  }
+
+  void moveUsernamePassword(Database database) {
+    SharedPreferences preferences = getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE);
+    final String username = preferences.getString(PREFERENCES_EMAIL_KEY, "");
+    final String password = preferences.getString(PREFERENCES_PASSWORD_KEY, "");
+
+    if ("".equals(username)) {
+      return;
+    }
+
+    database.putCredentials(username, password);
+
+    SharedPreferences.Editor editor = preferences.edit();
+    editor.remove(PREFERENCES_EMAIL_KEY);
+    editor.remove(PREFERENCES_PASSWORD_KEY);
+    editor.commit();
+  }
+
+  void setTestDatabase(Database database) {
+    this.database = database;
+  }
 }

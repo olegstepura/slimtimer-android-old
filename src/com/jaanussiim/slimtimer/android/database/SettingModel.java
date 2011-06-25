@@ -14,26 +14,29 @@
  * limitations under the License.
  */
 
-package com.jaanussiim.slimtimer.android.activities;
+package com.jaanussiim.slimtimer.android.database;
 
-import com.xtremelabs.robolectric.RobolectricTestRunner;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+public class SettingModel {
+  public static final String TABLE_NAME = "settings";
+  public static final String COLUMN_KEY = "setting_key";
+  public static final String COLUMN_VALUE = "setting_value";
+  private SettingKey key;
+  private String value;
 
-import static org.junit.Assert.assertTrue;
-
-@RunWith(RobolectricTestRunner.class)
-public class SlimtimerActivityTest {
-  private SlimtimerActivity slimtimerActivity;
-
-  @Before
-  public void setUp() {
-    slimtimerActivity = new SlimtimerActivity();
+  public SettingModel(SettingKey key, String value) {
+    this.key = key;
+    this.value = value;
   }
 
-  @Test
-  public void thisWillBeTrue() {
-    assertTrue(true);
+  public void setValue(String value) {
+    this.value = value;
+  }
+
+  public String getValue() {
+    return value;
+  }
+
+  public Integer getKeyIndex() {
+    return key.getIndex();
   }
 }
