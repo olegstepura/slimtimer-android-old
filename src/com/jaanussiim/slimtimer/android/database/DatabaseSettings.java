@@ -43,7 +43,7 @@ public class DatabaseSettings extends DatabaseBase {
   }
 
   public Setting loadSetting(SettingKey key) {
-    final String[] selectKeys = new String[] { Setting.COLUMN_VALUE};
+    final String[] selectKeys = new String[]{Setting.COLUMN_VALUE};
     final Cursor c = getDatabase().query(Setting.TABLE_NAME, selectKeys, "setting_key = ?", new String[]{Integer.toString(key.getIndex())}, null, null, null);
     if (c == null) {
       return new Setting(key, null);

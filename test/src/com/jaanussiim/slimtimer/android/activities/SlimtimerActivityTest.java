@@ -18,22 +18,19 @@ package com.jaanussiim.slimtimer.android.activities;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import com.jaanussiim.slimtimer.android.Constants;
 import com.jaanussiim.slimtimer.android.database.Database;
 import com.xtremelabs.robolectric.RobolectricTestRunner;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static com.jaanussiim.slimtimer.android.Constants.PREFERENCES_EMAIL_KEY;
-import static com.jaanussiim.slimtimer.android.Constants.PREFERENCES_NAME;
-import static com.jaanussiim.slimtimer.android.Constants.PREFERENCES_PASSWORD_KEY;
+import static com.jaanussiim.slimtimer.android.Constants.*;
+import static com.jaanussiim.slimtimer.android.testutils.ActivityTestUtils.namedActivityPushed;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 
 @RunWith(RobolectricTestRunner.class)
-public class SlimtimerActivityCredentialsMoveTest {
+public class SlimtimerActivityTest {
   private SlimtimerActivity slimtimerActivity;
   private Database database;
 
@@ -70,5 +67,11 @@ public class SlimtimerActivityCredentialsMoveTest {
 
     assertNull("Should have gotten moved username from database", database.getUsername());
     assertNull("Should have gotten moved password from database", database.getPassword());
+  }
+
+  @Test
+  public void withoutCredentialsLoginActivityPushed() {
+    slimtimerActivity.onCreate(null);
+    namedActivityPushed(slimtimerActivity, LoginActivity.class.getName());
   }
 }

@@ -14,26 +14,9 @@
  * limitations under the License.
  */
 
-package com.jaanussiim.slimtimer.android.database;
+package com.jaanussiim.slimtimer.android.activities;
 
-import android.content.Context;
+import android.app.Activity;
 
-public class DatabaseUser extends DatabaseSettings {
-  public DatabaseUser(final Context ctx) {
-    super(ctx);
-  }
-
-  public void putCredentials(String username, String password) {
-    putSetting(SettingKey.KEY_USERNAME, username);
-    putSetting(SettingKey.KEY_PASSWORD, password);
-  }
-
-  public String getUsername() {
-    return loadSetting(SettingKey.KEY_USERNAME).getValue();
-  }
-
-  public String getPassword() {
-    return loadSetting(SettingKey.KEY_PASSWORD).getValue();
-  }
-
+public class LoginActivity extends Activity {
 }

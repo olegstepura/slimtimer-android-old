@@ -18,13 +18,12 @@ package com.jaanussiim.slimtimer.android.activities;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import com.jaanussiim.slimtimer.android.database.Database;
 
-import static com.jaanussiim.slimtimer.android.Constants.PREFERENCES_NAME;
-import static com.jaanussiim.slimtimer.android.Constants.PREFERENCES_EMAIL_KEY;
-import static com.jaanussiim.slimtimer.android.Constants.PREFERENCES_PASSWORD_KEY;
+import static com.jaanussiim.slimtimer.android.Constants.*;
 
 public class SlimtimerActivity extends Activity {
   private static Database databaseInstance;
@@ -40,6 +39,17 @@ public class SlimtimerActivity extends Activity {
 
     database.open();
     moveUsernamePassword(database);
+
+    Intent nextActivityStart = null;
+
+    if (database.hasCredentials()) {
+
+    } else {
+      nextActivityStart = new Intent(SlimtimerActivity.this, LoginActivity.class);
+    }
+
+    startActivity(nextActivityStart);
+    finish();
   }
 
   //TODO jaanus: check this. I don't like static

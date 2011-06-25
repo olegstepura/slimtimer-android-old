@@ -18,8 +18,26 @@ package com.jaanussiim.slimtimer.android.database;
 
 import android.content.Context;
 
-public class Database extends DatabaseUsers {
-  public Database(final Context ctx) {
+public class DatabaseUsers extends DatabaseSettings {
+  public DatabaseUsers(final Context ctx) {
     super(ctx);
+  }
+
+  public void putCredentials(String username, String password) {
+    putSetting(SettingKey.KEY_USERNAME, username);
+    putSetting(SettingKey.KEY_PASSWORD, password);
+  }
+
+  public String getUsername() {
+    return loadSetting(SettingKey.KEY_USERNAME).getValue();
+  }
+
+  public String getPassword() {
+    return loadSetting(SettingKey.KEY_PASSWORD).getValue();
+  }
+
+  public boolean hasCredentials() {
+    String username = getUsername();
+    return username != null && !"".equals(username);
   }
 }
