@@ -14,18 +14,30 @@
  * limitations under the License.
  */
 
-package com.jaanussiim.slimtimer.android.activities;
+package com.jaanussiim.slimtimer.android;
 
-import android.app.Activity;
-import android.os.Bundle;
+import android.app.Application;
 import android.util.Log;
+import com.jaanussiim.slimtimer.android.database.Database;
 
-public class LoginActivity extends Activity {
-  private static final String T = "LoginActivity";
+public class SlimtimerApplication extends Application {
+  private static final String T = "SlimtimerApplication";
+  private Database database;
 
   @Override
-  protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
+  public void onCreate() {
     Log.d(T, "onCreate");
+    database = new Database(this);
+    database.open();
+  }
+
+  @Override
+  public void onTerminate() {
+    Log.d(T, "onTerminate");
+    database.close();
+  }
+
+  public Database getDatabase() {
+    return database;
   }
 }

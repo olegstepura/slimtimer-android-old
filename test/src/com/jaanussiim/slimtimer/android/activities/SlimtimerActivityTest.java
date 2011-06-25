@@ -38,6 +38,7 @@ public class SlimtimerActivityTest {
   public void setUp() {
     slimtimerActivity = new SlimtimerActivity();
     database = new Database(slimtimerActivity);
+    database.open();
     slimtimerActivity.setTestDatabase(database);
   }
 

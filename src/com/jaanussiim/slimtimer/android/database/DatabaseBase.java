@@ -88,10 +88,6 @@ public class DatabaseBase {
   }
 
   public void open() {
-    if (databaseHelper != null) {
-      return;
-    }
-
     databaseHelper = new DatabaseHelper(ctx);
     database = databaseHelper.getWritableDatabase();
   }

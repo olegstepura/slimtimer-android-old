@@ -21,23 +21,25 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
+import com.jaanussiim.slimtimer.android.SlimtimerApplication;
 import com.jaanussiim.slimtimer.android.database.Database;
 
 import static com.jaanussiim.slimtimer.android.Constants.*;
 
 public class SlimtimerActivity extends Activity {
-  private static Database databaseInstance;
+  private static final String T = "SlimtimerActivity";
   private Database database;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    Log.d(T, "onCreate");
 
     if (database == null) {
-      database = getSharedDatabase(this);
+      database = ((SlimtimerApplication)getApplication()).getDatabase();
     }
 
-    database.open();
     moveUsernamePassword(database);
 
     Intent nextActivityStart = null;
@@ -50,15 +52,6 @@ public class SlimtimerActivity extends Activity {
 
     startActivity(nextActivityStart);
     finish();
-  }
-
-  //TODO jaanus: check this. I don't like static
-  public static Database getSharedDatabase(Context ctx) {
-    if (databaseInstance == null) {
-      databaseInstance = new Database(ctx);
-    }
-
-    return databaseInstance;
   }
 
   void moveUsernamePassword(Database database) {
