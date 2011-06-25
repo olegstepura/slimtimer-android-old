@@ -14,20 +14,18 @@
  * limitations under the License.
  */
 
-package com.jaanussiim.slimtimer.android.activities;
+package com.jaanussiim.slimtimer.android.fragments;
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
-import android.util.Log;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import com.jaanussiim.slimtimer.android.R;
 
-public class LoginActivity extends FragmentActivity {
-  private static final String T = "LoginActivity";
-
+public class LoginFragment extends Fragment {
   @Override
-  protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    Log.d(T, "onCreate");
-    setContentView(R.layout.login_activity);
+  public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    return inflater.inflate(R.layout.login_fragment, container, false);
   }
 }

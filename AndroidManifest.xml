@@ -14,4 +14,7 @@
         </activity>
         <activity android:name=".activities.LoginActivity" android:noHistory="true"></activity>
     </application>
+    <supports-screens android:smallScreens="true"
+		android:largeScreens="true" android:normalScreens="true" android:anyDensity="true"></supports-screens>
+    
 </manifest>
