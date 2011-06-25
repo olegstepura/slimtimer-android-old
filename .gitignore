@@ -1,4 +1,8 @@
 .classpath
+.idea
 .project
 bin
 gen
+out
+slimtimer-android.iml
+tmp
