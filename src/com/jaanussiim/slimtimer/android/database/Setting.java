@@ -16,14 +16,14 @@
 
 package com.jaanussiim.slimtimer.android.database;
 
-public class SettingModel {
+public class Setting {
   public static final String TABLE_NAME = "settings";
   public static final String COLUMN_KEY = "setting_key";
   public static final String COLUMN_VALUE = "setting_value";
   private SettingKey key;
   private String value;
 
-  public SettingModel(SettingKey key, String value) {
+  public Setting(SettingKey key, String value) {
     this.key = key;
     this.value = value;
   }
