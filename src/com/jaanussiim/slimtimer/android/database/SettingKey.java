@@ -17,7 +17,7 @@
 package com.jaanussiim.slimtimer.android.database;
 
 public enum SettingKey {
-  KEY_USERNAME(1), KEY_PASSWORD(2);
+  KEY_USERNAME(1), KEY_PASSWORD(2), KEY_REMEMBER_LOGIN(3);
 
   private final Integer index;
 

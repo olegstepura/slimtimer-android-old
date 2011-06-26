@@ -16,16 +16,15 @@
 
 package com.jaanussiim.slimtimer.android.database;
 
-import android.app.Activity;
 import com.jaanussiim.slimtimer.android.testutils.DatabaseHelper;
 import com.xtremelabs.robolectric.RobolectricTestRunner;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(RobolectricTestRunner.class)
 public class DatabaseUsersTest {
@@ -40,6 +39,14 @@ public class DatabaseUsersTest {
   @Test
   public void withEmptyDatabaseNoCredentials() {
     assertFalse("Should have no credentials", database.hasCredentials());
+  }
+
+  @Test
+  public void credentialsAddingRemoving() {
+    database.putCredentials("username", "password");
+    assertTrue(database.hasCredentials());
+    database.removeCredentials();
+    assertFalse(database.hasCredentials());
   }
 
   @After

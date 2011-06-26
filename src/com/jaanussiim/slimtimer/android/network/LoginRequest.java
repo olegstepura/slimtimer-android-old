@@ -18,6 +18,7 @@ package com.jaanussiim.slimtimer.android.network;
 
 import android.util.Log;
 import com.google.gson.Gson;
+import com.jaanussiim.slimtimer.android.database.Database;
 import org.apache.http.client.HttpClient;
 
 import java.net.HttpURLConnection;
@@ -34,12 +35,14 @@ import static java.net.HttpURLConnection.HTTP_OK;
 public class LoginRequest extends NetworkRequest {
   private static final String T = "LoginRequest";
   private static final String REQUEST = "user:\n  email: {0}\n  password: {1}\napi_key: {2}";
+  private final Database database;
   private final String username;
   private final String password;
   private LoginRequestListener listener;
 
-  public LoginRequest(String username, String password) {
+  public LoginRequest(final Database database, String username, String password) {
     super(SERVER_URL + "/users/token");
+    this.database = database;
     this.username = username;
     this.password = password;
     setAccepts(CONTENT_TYPE_JSON);
@@ -77,6 +80,7 @@ public class LoginRequest extends NetworkRequest {
       return;
     }
 
+    database.putCredentials(username, password);
     listener.loginSuccess();
   }
 }

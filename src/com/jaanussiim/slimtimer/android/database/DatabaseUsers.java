@@ -18,26 +18,43 @@ package com.jaanussiim.slimtimer.android.database;
 
 import android.content.Context;
 
+import static com.jaanussiim.slimtimer.android.database.SettingKey.KEY_PASSWORD;
+import static com.jaanussiim.slimtimer.android.database.SettingKey.KEY_REMEMBER_LOGIN;
+import static com.jaanussiim.slimtimer.android.database.SettingKey.KEY_USERNAME;
+
 public class DatabaseUsers extends DatabaseSettings {
   public DatabaseUsers(final Context ctx) {
     super(ctx);
   }
 
   public void putCredentials(String username, String password) {
-    putSetting(SettingKey.KEY_USERNAME, username);
-    putSetting(SettingKey.KEY_PASSWORD, password);
+    putStringSetting(KEY_USERNAME, username);
+    putStringSetting(KEY_PASSWORD, password);
+  }
+
+  public void removeCredentials() {
+    removeSetting(KEY_USERNAME);
+    removeSetting(KEY_PASSWORD);
   }
 
   public String getUsername() {
-    return loadSetting(SettingKey.KEY_USERNAME).getValue();
+    return loadSetting(KEY_USERNAME).getValue();
   }
 
   public String getPassword() {
-    return loadSetting(SettingKey.KEY_PASSWORD).getValue();
+    return loadSetting(KEY_PASSWORD).getValue();
   }
 
   public boolean hasCredentials() {
     String username = getUsername();
     return username != null && !"".equals(username);
+  }
+
+  public void setRememberLogin(boolean rememberLogin) {
+    putBooleanSetting(KEY_REMEMBER_LOGIN, rememberLogin);
+  }
+
+  public boolean rememberLogin() {
+    return loadSetting(KEY_REMEMBER_LOGIN).getBooleanValue();
   }
 }

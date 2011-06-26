@@ -27,6 +27,7 @@ import org.junit.runner.RunWith;
 import static com.jaanussiim.slimtimer.android.Constants.*;
 import static com.jaanussiim.slimtimer.android.testutils.ActivityTestUtils.namedActivityPushed;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 
 @RunWith(RobolectricTestRunner.class)
@@ -43,7 +44,7 @@ public class SlimtimerActivityTest {
   }
 
   @Test
-  public void previousUsernamePasswordMovedToDatabaseAndRemovedFromPreferences() {
+  public void previousUsernamePasswordRemovedFromPreferences() {
     final String testUsername = "this.is.my.username@somewhere.com";
     final String testPassword = "this.is.my.password";
 
@@ -58,16 +59,15 @@ public class SlimtimerActivityTest {
     assertEquals("Username should be removed from preferences", "", preferences.getString(PREFERENCES_EMAIL_KEY, ""));
     assertEquals("Password should be removed from preferences", "", preferences.getString(PREFERENCES_PASSWORD_KEY, ""));
 
-    assertEquals("Should have gotten moved username from database", testUsername, database.getUsername());
-    assertEquals("Should have gotten moved password from database", testPassword, database.getPassword());
+    assertFalse(database.hasCredentials());
   }
 
   @Test
-  public void withNoPreviousCredentialsNothingCreatedInDatabase() {
+  public void withCredentialsButDontRememberLoginLoginActivityPushed() {
+    database.putCredentials("username", "password");
+    database.setRememberLogin(false);
     slimtimerActivity.onCreate(null);
-
-    assertNull("Should have gotten moved username from database", database.getUsername());
-    assertNull("Should have gotten moved password from database", database.getPassword());
+    namedActivityPushed(slimtimerActivity, LoginActivity.class.getName());
   }
 
   @Test

@@ -46,6 +46,9 @@ public class NetworkRequest implements Runnable {
   private String contentType;
   public static final int NO_NETWORK = -1;
 
+  private boolean cancelled;
+  private Thread t;
+
   static {
     HttpProtocolParams.setVersion(params, HttpVersion.HTTP_1_1);
     HttpConnectionParams.setStaleCheckingEnabled(params, false);
@@ -59,7 +62,7 @@ public class NetworkRequest implements Runnable {
   }
 
   public void execute() {
-    Thread t = new Thread(this);
+    t = new Thread(this);
     t.start();
   }
 
@@ -77,6 +80,7 @@ public class NetworkRequest implements Runnable {
       post.setEntity(baEntity);
     } catch (UnsupportedEncodingException e) {
       Log.e(T, "Encoding error", e);
+      //TODO jaanus: handle this error
       return;
     }
 
@@ -86,10 +90,14 @@ public class NetworkRequest implements Runnable {
       ByteArrayOutputStream baos = new ByteArrayOutputStream();
       resp.getEntity().writeTo(baos);
       String response = new String(baos.toByteArray(), "utf-8");
-      httpResponse(statusCode, response);
+      if (!cancelled) {
+        httpResponse(statusCode, response);
+      }
     } catch (IOException e) {
       Log.e(T, "Post error", e);
-      httpResponse(NO_NETWORK, "");
+      if (!cancelled) {
+        httpResponse(NO_NETWORK, "");
+      }
     }
   }
 
@@ -111,5 +119,9 @@ public class NetworkRequest implements Runnable {
 
   protected void setContentType(String contentType) {
     this.contentType = contentType;
+  }
+
+  public void cancel() {
+    cancelled = true;
   }
 }

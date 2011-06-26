@@ -39,4 +39,12 @@ public class Setting {
   public Integer getKeyIndex() {
     return key.getIndex();
   }
+
+  public boolean getBooleanValue() {
+    if (value == null) {
+      return false;
+    }
+
+    return Boolean.parseBoolean(value);
+  }
 }

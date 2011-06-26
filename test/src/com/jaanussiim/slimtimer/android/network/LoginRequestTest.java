@@ -16,8 +16,10 @@
 
 package com.jaanussiim.slimtimer.android.network;
 
+import com.jaanussiim.slimtimer.android.testutils.DatabaseHelper;
 import com.xtremelabs.robolectric.Robolectric;
 import com.xtremelabs.robolectric.RobolectricTestRunner;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -32,6 +34,7 @@ import static java.net.HttpURLConnection.HTTP_BAD_GATEWAY;
 import static java.net.HttpURLConnection.HTTP_INTERNAL_ERROR;
 import static java.net.HttpURLConnection.HTTP_OK;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(RobolectricTestRunner.class)
@@ -39,10 +42,13 @@ public class LoginRequestTest implements LoginRequestListener {
   private LoginRequest request;
   private boolean loginSuccess;
   private int loginErrorCode;
+  private DatabaseHelper database;
 
   @Before
   public void setUp() {
-    request = new LoginRequest("username", "password");
+    database = new DatabaseHelper();
+    database.open();
+    request = new LoginRequest(database, "username", "password");
     request.setListener(this);
     loginSuccess = false;
     loginErrorCode = -1;
@@ -73,8 +79,10 @@ public class LoginRequestTest implements LoginRequestListener {
 
   @Test
   public void successResponse() {
+    assertFalse("Should not have credentials in empty database", database.hasCredentials());
     request.httpResponse(HTTP_OK, "{user_id: 12345, access_token: \"3123123213213b3123b213b23213b213\"}");
     assertTrue("Login success response not received", loginSuccess);
+    assertTrue("Should have credentials after success response", database.hasCredentials());
   }
 
   @Test
@@ -89,5 +97,10 @@ public class LoginRequestTest implements LoginRequestListener {
 
   public void loginError(final int errorCode) {
     loginErrorCode = errorCode;
+  }
+
+  @After
+  public void tearDown() {
+    database.close();
   }
 }

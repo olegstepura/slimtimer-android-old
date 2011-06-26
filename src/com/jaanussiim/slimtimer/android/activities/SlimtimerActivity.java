@@ -40,9 +40,13 @@ public class SlimtimerActivity extends Activity {
       database = ((SlimtimerApplication)getApplication()).getDatabase();
     }
 
-    moveUsernamePassword(database);
+    removeUsernamePasswordFromPreferences();
 
     Intent nextActivityStart = null;
+
+    if (!database.rememberLogin()) {
+      database.removeCredentials();
+    }
 
     if (database.hasCredentials()) {
 
@@ -54,7 +58,7 @@ public class SlimtimerActivity extends Activity {
     finish();
   }
 
-  void moveUsernamePassword(Database database) {
+  private void removeUsernamePasswordFromPreferences() {
     SharedPreferences preferences = getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE);
     final String username = preferences.getString(PREFERENCES_EMAIL_KEY, "");
     final String password = preferences.getString(PREFERENCES_PASSWORD_KEY, "");
@@ -62,8 +66,6 @@ public class SlimtimerActivity extends Activity {
     if ("".equals(username)) {
       return;
     }
-
-    database.putCredentials(username, password);
 
     SharedPreferences.Editor editor = preferences.edit();
     editor.remove(PREFERENCES_EMAIL_KEY);
