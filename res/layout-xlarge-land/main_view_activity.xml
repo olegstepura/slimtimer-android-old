@@ -17,21 +17,28 @@
 
 <LinearLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
-  android:orientation="vertical"
+  android:orientation="horizontal"
   android:layout_width="fill_parent"
   android:layout_height="fill_parent">
   	<fragment
     	xmlns:android="http://schemas.android.com/apk/res/android"
     	android:name="com.jaanussiim.slimtimer.android.fragments.TasksListFragment"
-    	android:layout_width="fill_parent"
-    	android:layout_height="wrap_content"
+    	android:layout_width="wrap_content"
+    	android:layout_height="fill_parent"
     	android:id="@+id/tasks_viewer_fragment" android:layout_weight="1">
 	</fragment>    
     <fragment
       xmlns:android="http://schemas.android.com/apk/res/android"
       android:name="com.jaanussiim.slimtimer.android.fragments.RunningTasksFragment"
-    	android:layout_width="fill_parent"
-    	android:layout_height="wrap_content"
+      android:layout_width="wrap_content"
+      android:layout_height="fill_parent"
       android:id="@+id/running_tasks_fragment" android:layout_weight="1">
+  </fragment>
+    <fragment
+      xmlns:android="http://schemas.android.com/apk/res/android"
+      android:name="com.jaanussiim.slimtimer.android.fragments.EntriesListFragment"
+      android:layout_width="wrap_content"
+      android:layout_height="fill_parent"
+      android:id="@+id/entries_viewer_fragment" android:layout_weight="1">
   </fragment>
 </LinearLayout>

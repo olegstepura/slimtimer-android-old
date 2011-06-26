@@ -16,17 +16,29 @@
 
 package com.jaanussiim.slimtimer.android.fragments;
 
+import android.R;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 public class TasksListFragment extends ListFragment {
   private static final String T = "TasksListFragment";
+
+  final String[] testStrings = {"One", "Two", "Three", "Four", "Five", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen"};
 
   @Override
   public void onActivityCreated(final Bundle savedInstanceState) {
     super.onActivityCreated(savedInstanceState);
     Log.d(T, "onActivityCreated");
     getView().setBackgroundColor(0xFF0000FF);
+    setListAdapter(new ArrayAdapter<String>(getActivity(), R.layout.simple_list_item_1, testStrings));
+  }
+
+  @Override
+  public void onListItemClick(final ListView l, final View v, final int position, final long id) {
+    Log.d(T, "Clicked on " + testStrings[position]);
   }
 }
