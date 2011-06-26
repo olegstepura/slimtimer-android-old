@@ -19,7 +19,10 @@ package com.jaanussiim.slimtimer.android.activities;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import com.jaanussiim.slimtimer.android.R;
+import com.jaanussiim.slimtimer.android.network.LoginRequest;
 
 public class LoginActivity extends FragmentActivity {
   private static final String T = "LoginActivity";
@@ -29,5 +32,15 @@ public class LoginActivity extends FragmentActivity {
     super.onCreate(savedInstanceState);
     Log.d(T, "onCreate");
     setContentView(R.layout.login_activity);
+
+    final Button login = (Button) findViewById(R.id.login_button);
+    login.setOnClickListener(new View.OnClickListener() {
+      public void onClick(View view) {
+        Log.d(T, "Clicked button");
+
+        LoginRequest request = new LoginRequest("jaanussiim", "pass");
+        request.execute();
+      }
+    });
   }
 }

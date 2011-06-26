@@ -14,6 +14,8 @@
         </activity>
         <activity android:name=".activities.LoginActivity" android:noHistory="true"></activity>
     </application>
+    
+    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
     <supports-screens android:smallScreens="true"
 		android:largeScreens="true" android:normalScreens="true" android:anyDensity="true"></supports-screens>
     

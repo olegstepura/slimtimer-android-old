@@ -14,12 +14,8 @@
  * limitations under the License.
  */
 
-package com.jaanussiim.slimtimer.android;
+package com.jaanussiim.slimtimer.android.network;
 
-public interface Constants extends Secrets {
-  String PREFERENCES_NAME = "SlimPrefs";
-  String PREFERENCES_EMAIL_KEY = "prefs_email";
-  String PREFERENCES_PASSWORD_KEY = "prefs_pass";
-
-  String SERVER_URL = "http://slimtimer.com";
+public interface RequestListener {
+  void requestFailed(int errorCode);
 }
