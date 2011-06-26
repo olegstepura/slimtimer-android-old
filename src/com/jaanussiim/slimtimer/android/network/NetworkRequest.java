@@ -44,6 +44,7 @@ public class NetworkRequest implements Runnable {
   private static final HttpParams params = new BasicHttpParams();
   private String accepts;
   private String contentType;
+  public static final int NO_NETWORK = -1;
 
   static {
     HttpProtocolParams.setVersion(params, HttpVersion.HTTP_1_1);
@@ -88,6 +89,7 @@ public class NetworkRequest implements Runnable {
       httpResponse(statusCode, response);
     } catch (IOException e) {
       Log.e(T, "Post error", e);
+      httpResponse(NO_NETWORK, "");
     }
   }
 

@@ -16,15 +16,27 @@
 
 package com.jaanussiim.slimtimer.android.network;
 
+import android.util.Log;
+import com.google.gson.Gson;
+import org.apache.http.client.HttpClient;
+
+import java.net.HttpURLConnection;
 import java.text.MessageFormat;
 
 import static com.jaanussiim.slimtimer.android.Constants.SERVER_URL;
 import static com.jaanussiim.slimtimer.android.Constants.SLIMTIMER_API_KEY;
+import static com.jaanussiim.slimtimer.android.network.LoginRequestListener.LOGIN_ERROR_AUTHENTICATION_ERROR;
+import static com.jaanussiim.slimtimer.android.network.LoginRequestListener.LOGIN_ERROR_NO_NETWORK;
+import static com.jaanussiim.slimtimer.android.network.LoginRequestListener.LOGIN_ERROR_UNKNOWN;
+import static java.net.HttpURLConnection.HTTP_INTERNAL_ERROR;
+import static java.net.HttpURLConnection.HTTP_OK;
 
 public class LoginRequest extends NetworkRequest {
+  private static final String T = "LoginRequest";
   private static final String REQUEST = "user:\n  email: {0}\n  password: {1}\napi_key: {2}";
   private final String username;
   private final String password;
+  private LoginRequestListener listener;
 
   public LoginRequest(String username, String password) {
     super(SERVER_URL + "/users/token");
@@ -37,5 +49,34 @@ public class LoginRequest extends NetworkRequest {
   @Override
   public String requestBody() {
     return MessageFormat.format(REQUEST, username, password, SLIMTIMER_API_KEY);
+  }
+
+  public void setListener(final LoginRequestListener listener) {
+    this.listener = listener;
+  }
+
+  @Override
+  public void httpResponse(final int httpCode, final String responseBody) {
+    super.httpResponse(httpCode, responseBody);
+
+    if (httpCode == NO_NETWORK) {
+      listener.loginError(LOGIN_ERROR_NO_NETWORK);
+      return;
+    }
+
+    Gson gson = new Gson();
+    LoginResponse response = gson.fromJson(responseBody, LoginResponse.class);
+
+    if (httpCode == HTTP_INTERNAL_ERROR) {
+      listener.loginError(LOGIN_ERROR_AUTHENTICATION_ERROR);
+      return;
+    }
+
+    if (httpCode != HTTP_OK) {
+      listener.loginError(LOGIN_ERROR_UNKNOWN);
+      return;
+    }
+
+    listener.loginSuccess();
   }
 }
