@@ -17,6 +17,7 @@
 package com.jaanussiim.slimtimer.android.database;
 
 import android.app.Activity;
+import com.jaanussiim.slimtimer.android.testutils.DatabaseHelper;
 import com.xtremelabs.robolectric.RobolectricTestRunner;
 import org.junit.After;
 import org.junit.Before;
@@ -31,12 +32,11 @@ import static org.junit.Assert.*;
 
 @RunWith(RobolectricTestRunner.class)
 public class DatabaseSettingsTest {
-  private Database database;
+  private DatabaseHelper database;
 
   @Before
   public void setUp() {
-    Activity activity = new Activity();
-    database = new Database(activity);
+    database = new DatabaseHelper();
     database.open();
   }
 
