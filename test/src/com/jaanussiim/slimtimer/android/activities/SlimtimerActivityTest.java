@@ -75,4 +75,12 @@ public class SlimtimerActivityTest {
     slimtimerActivity.onCreate(null);
     namedActivityPushed(slimtimerActivity, LoginActivity.class.getName());
   }
+
+  @Test
+  public void withExistingCredentialsMainActivityPushed() {
+    database.putCredentials("username", "password");
+    database.setRememberLogin(true);
+    slimtimerActivity.onCreate(null);
+    namedActivityPushed(slimtimerActivity, MainViewActivity.class.getName());
+  }
 }

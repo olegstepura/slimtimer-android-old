@@ -13,6 +13,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.LoginActivity" android:noHistory="true"></activity>
+        <activity android:name=".activities.MainViewActivity"></activity>
     </application>
     
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>

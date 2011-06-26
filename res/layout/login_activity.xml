@@ -23,6 +23,6 @@
     	android:name="com.jaanussiim.slimtimer.android.fragments.LoginFragment"
     	android:layout_width="fill_parent"
     	android:layout_height="fill_parent"
-    	android:id="@+id/image_viewer_fragment">
+    	android:id="@+id/login_viewer_fragment">
 	</fragment>
 </ScrollView>

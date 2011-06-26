@@ -42,16 +42,15 @@ public class SlimtimerActivity extends Activity {
 
     removeUsernamePasswordFromPreferences();
 
-    Intent nextActivityStart = null;
-
     if (!database.rememberLogin()) {
       database.removeCredentials();
     }
 
+    Intent nextActivityStart;
     if (database.hasCredentials()) {
-
+      nextActivityStart = new Intent(this, MainViewActivity.class);
     } else {
-      nextActivityStart = new Intent(SlimtimerActivity.this, LoginActivity.class);
+      nextActivityStart = new Intent(this, LoginActivity.class);
     }
 
     startActivity(nextActivityStart);
