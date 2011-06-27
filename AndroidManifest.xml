@@ -2,9 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.jaanussiim.slimtimer.android"
           android:versionCode="5" android:versionName="1.0.0">
-    <uses-sdk android:minSdkVersion="7"/>
+    <uses-sdk android:minSdkVersion="7" android:targetSdkVersion="12"/>
 
-    <application android:icon="@drawable/icon" android:label="@string/app_name" android:name=".SlimtimerApplication">
+    <application android:icon="@drawable/icon" android:label="@string/app_name" android:name=".SlimtimerApplication" android:theme="@style/Theme.SlimTimer">
         <activity android:name=".activities.SlimtimerActivity"
                   android:noHistory="true">
             <intent-filter>

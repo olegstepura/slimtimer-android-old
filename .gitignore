@@ -6,5 +6,7 @@ gen
 out
 slimtimer-android.iml
 tmp
+*.iml
+local.properties
 
 src/com/jaanussiim/slimtimer/android/Secrets.java
